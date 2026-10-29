@@ -15,6 +15,8 @@
     el.style.transitionDelay = (k % 3) * 100 + "ms";
     io.observe(el);
   });
+  var stackSection = document.getElementById("stack");
+  if (stackSection) io.observe(stackSection);
 
   // mobile side panel
   var bg = document.getElementById("burger"),
@@ -258,6 +260,21 @@
     if (img.complete && img.naturalWidth === 0) fb(img);
   }
   document.querySelectorAll(".pimg").forEach(wire);
+
+  document.querySelectorAll(".cert-image").forEach(function (img) {
+    var slot = img.closest(".cert-image-slot");
+    function showCertificate() {
+      slot.classList.add("has-image");
+    }
+    img.addEventListener("load", showCertificate);
+    img.addEventListener("error", function () {
+      img.hidden = true;
+    });
+    if (img.complete) {
+      if (img.naturalWidth > 0) showCertificate();
+      else img.hidden = true;
+    }
+  });
 
   // project pages
   var P = {

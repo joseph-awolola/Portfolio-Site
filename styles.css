@@ -483,6 +483,39 @@ section {
 #contact {
   border: 0;
 }
+#stack {
+  position: relative;
+  isolation: isolate;
+}
+#stack::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background-image:
+    linear-gradient(to right, rgba(58, 109, 224, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(58, 109, 224, 0.09) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 14%,
+    #000 86%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 14%,
+    #000 86%,
+    transparent
+  );
+  pointer-events: none;
+}
 h2 {
   font-size: clamp(1.8rem, 4.2vw, 2.8rem);
   margin-bottom: 16px;
@@ -515,30 +548,17 @@ h2 {
   align-items: center;
   padding: clamp(26px, 5vw, 48px);
   border: 1px solid var(--line);
-  border-left: 4px solid var(--b);
-  border-radius: 18px;
-  background:
-    radial-gradient(ellipse at 0 0, rgba(220, 232, 255, 0.72), transparent 58%),
-    var(--bg);
-  box-shadow: 0 12px 32px rgba(15, 27, 51, 0.05);
+  border-radius: 12px;
+  background: var(--bg);
 }
 .fullstack-kicker {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
   color: var(--bd);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.12em;
-}
-.fullstack-kicker::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--b);
-  box-shadow: 0 0 0 4px rgba(58, 109, 224, 0.12);
+  margin-bottom: 14px;
 }
 .fullstack-main h3 {
   max-width: 17em;
@@ -589,6 +609,162 @@ h2 {
   border-color: rgba(58, 109, 224, 0.2);
   background: rgba(220, 232, 255, 0.7);
   color: var(--bd);
+}
+.stack-hive {
+  position: relative;
+  width: min(100%, 650px);
+  aspect-ratio: 0.96;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.stack-cell {
+  position: absolute;
+  top: var(--hive-y);
+  left: var(--hive-x);
+  width: 38%;
+  aspect-ratio: 1.155;
+  padding: 3px;
+  background: rgba(58, 109, 224, 0.38);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition:
+    filter 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+#stack.on .stack-cell {
+  animation: stack-assemble 0.8s cubic-bezier(0.2, 0.75, 0.25, 1) backwards;
+}
+@keyframes stack-assemble {
+  from {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--hive-from-x, 0%)),
+        calc(-50% + var(--hive-from-y, 0%))
+      )
+      scale(0.65);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.stack-hive:hover .stack-cell:not(:hover) {
+  filter: blur(2px);
+  opacity: 0.38;
+}
+.stack-hive .stack-cell:hover {
+  z-index: 1;
+  transform: translate(-50%, -50%) scale(1.045);
+}
+.stack-cell:nth-child(1) {
+  --hive-x: 20%;
+  --hive-y: 33.333%;
+  --hive-from-x: 48%;
+  --hive-from-y: 28%;
+  animation-delay: 0.16s;
+}
+.stack-cell:nth-child(2) {
+  --hive-x: 50%;
+  --hive-y: 16.667%;
+  --hive-from-y: 52%;
+  animation-delay: 0.08s;
+}
+.stack-cell:nth-child(3) {
+  --hive-x: 50%;
+  --hive-y: 50%;
+  animation-delay: 0s;
+}
+.stack-cell:nth-child(4) {
+  --hive-x: 80%;
+  --hive-y: 33.333%;
+  --hive-from-x: -48%;
+  --hive-from-y: 28%;
+  animation-delay: 0.24s;
+}
+.stack-cell:nth-child(5) {
+  --hive-x: 20%;
+  --hive-y: 66.667%;
+  --hive-from-x: 48%;
+  --hive-from-y: -28%;
+  animation-delay: 0.32s;
+}
+.stack-cell:nth-child(6) {
+  --hive-x: 80%;
+  --hive-y: 66.667%;
+  --hive-from-x: -48%;
+  --hive-from-y: -28%;
+  animation-delay: 0.4s;
+}
+.stack-cell:nth-child(7) {
+  --hive-x: 50%;
+  --hive-y: 83.333%;
+  --hive-from-y: -52%;
+  animation-delay: 0.48s;
+}
+.stack-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  background: var(--soft);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  color: var(--ink);
+  transition: background 0.2s;
+}
+.stack-cell:hover .stack-content {
+  background: var(--bl);
+}
+.stack-mark {
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 8px;
+  border: 1px solid rgba(58, 109, 224, 0.22);
+  border-radius: 15px;
+  background: rgba(220, 232, 255, 0.75);
+  color: var(--bd);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.stack-name {
+  color: var(--bd);
+  font-size: clamp(0.92rem, 2.3vw, 1.12rem);
+  font-weight: 800;
+  text-align: center;
+}
+.stack-center .stack-content {
+  background: var(--bl);
+}
+.stack-center .stack-mark {
+  background: #fff;
+}
+.stack-tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 0;
+  color: var(--bd);
+  font-weight: 700;
+}
+.stack-tools span {
+  color: var(--mute);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.stack-tools i {
+  color: var(--b);
+  font-style: normal;
 }
 .proj {
   display: grid;
@@ -699,6 +875,30 @@ h2 {
     radial-gradient(ellipse at 50% 115%, rgba(58, 109, 224, 0.16), transparent 58%),
     linear-gradient(145deg, #f8faff, #edf3ff);
   color: rgba(38, 80, 184, 0.72);
+}
+.cert-image {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  object-fit: contain;
+  background: #fff;
+}
+.cert-image[hidden] {
+  display: none;
+}
+.cert-image-slot.has-image {
+  background: #fff;
+}
+.cert-image-slot.has-image::before {
+  display: none;
+}
+.cert-image-slot.has-image .cert-image-label,
+.cert-image-slot.has-image svg,
+.cert-image-slot.has-image .cert-image-prompt {
+  display: none;
 }
 .cert-image-slot::before {
   content: "";
@@ -1251,6 +1451,7 @@ footer .soc {
   .fullstack {
     grid-template-columns: minmax(0, 1fr);
     gap: 26px;
+    padding: clamp(26px, 5vw, 48px);
   }
   .fullstack-skills {
     padding: 22px 0 0;
@@ -1282,6 +1483,11 @@ footer .soc {
   }
   .fx {
     animation: none;
+  }
+  .stack-cell,
+  .stack-content {
+    animation: none;
+    transition: none;
   }
   html {
     scroll-behavior: auto;
