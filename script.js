@@ -53,10 +53,10 @@
     contactNote = document.getElementById("contact-note");
   if (contactForm && contactMessage && contactNote) {
     var reasons = [
-        "you have a project idea",
-        "you'd like to collaborate",
-        "you're hiring a developer",
-        "you have a question about my work",
+        "You have a project idea",
+        "You'd like to collaborate",
+        "You're hiring a developer",
+        "You have a question about my work",
       ],
       reasonIndex = 0,
       characterIndex = 0,
@@ -113,14 +113,27 @@
           "Hi Joseph,\n\n" +
           message +
           "\n\nMy email address: " +
-          email;
-      contactNote.textContent =
-        "Opening your email app with a message addressed to Joseph.";
-      window.location.href =
-        "mailto:josephawolola16@gmail.com?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(body);
+          email,
+        gmailUrl =
+          "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+          encodeURIComponent("josephawolola16@gmail.com") +
+          "&su=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body),
+        draftWindow = window.open(gmailUrl, "_blank");
+      if (draftWindow) {
+        contactNote.textContent =
+          "Gmail draft opened. Review your message and press Send.";
+        return;
+      }
+      contactNote.textContent = "Your browser blocked the new tab. ";
+      var fallback = document.createElement("a");
+      fallback.href = gmailUrl;
+      fallback.target = "_blank";
+      fallback.rel = "noopener";
+      fallback.textContent = "Open your prefilled Gmail draft";
+      contactNote.appendChild(fallback);
     });
   }
 

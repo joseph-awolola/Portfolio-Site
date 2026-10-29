@@ -508,29 +508,87 @@ h2 {
   color: var(--mute);
   font-size: 0.97rem;
 }
-.split {
+.fullstack {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 40px;
+  align-items: center;
+  padding: clamp(26px, 5vw, 48px);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--b);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 0 0, rgba(220, 232, 255, 0.72), transparent 58%),
+    var(--bg);
+  box-shadow: 0 12px 32px rgba(15, 27, 51, 0.05);
 }
-.split .col {
-  background: var(--soft);
+.fullstack-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--bd);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
-.split ul {
+.fullstack-kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--b);
+  box-shadow: 0 0 0 4px rgba(58, 109, 224, 0.12);
+}
+.fullstack-main h3 {
+  max-width: 17em;
+  margin: 0 0 14px;
+  font-size: clamp(1.35rem, 2.8vw, 1.8rem);
+  line-height: 1.2;
+}
+.fullstack-main p {
+  max-width: 38em;
+  margin: 0;
+  color: var(--mute);
+  font-size: 0.98rem;
+}
+.fullstack-skills {
+  display: grid;
+  gap: 18px;
+  padding-left: 28px;
+  border-left: 1px solid var(--line);
+}
+.skill-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--mute);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.skill-primary .skill-label {
+  color: var(--bd);
+}
+.fullstack-skills ul {
   list-style: none;
-  margin: 16px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px;
 }
-.split li {
+.fullstack-skills li {
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 4px 14px;
-  font-size: 0.88rem;
+  padding: 5px 11px;
+  color: var(--mute);
+  font-size: 0.8rem;
   font-weight: 700;
+}
+.skill-primary li {
+  border-color: rgba(58, 109, 224, 0.2);
+  background: rgba(220, 232, 255, 0.7);
+  color: var(--bd);
 }
 .proj {
   display: grid;
@@ -851,6 +909,10 @@ h2 {
   font-size: 0.78rem;
   line-height: 1.5;
 }
+.contact-note a {
+  color: var(--bd);
+  font-weight: 800;
+}
 .cta .lk {
   grid-area: social;
   display: flex;
@@ -899,39 +961,40 @@ h2 {
 footer {
   background: var(--soft);
   border-top: 1px solid var(--line);
-  padding: 56px 0 28px;
+  padding: 28px 0 16px;
   color: var(--mute);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 .fgrid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 28px;
 }
 .fb {
   font:
-    700 1.35rem "Google Sans",
+    700 1.15rem "Google Sans",
     sans-serif;
   color: var(--ink);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 footer p {
-  margin: 0 0 16px;
-  max-width: 26em;
+  margin: 0 0 10px;
+  max-width: 34em;
 }
 footer h4 {
-  margin: 0 0 14px;
+  margin: 0 0 8px;
   font:
-    700 1rem "Google Sans",
+    700 0.9rem "Google Sans",
     sans-serif;
   color: var(--ink);
 }
 .fnav a,
 .fmail {
-  display: block;
+  display: inline-block;
   color: var(--mute);
   text-decoration: none;
-  padding: 4px 0;
+  padding: 2px 8px 2px 0;
   font-weight: 700;
 }
 .fnav a:hover,
@@ -941,14 +1004,14 @@ footer h4 {
 .ftech {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 5px;
 }
 .ftech span {
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 4px 12px;
-  font-size: 0.82rem;
+  padding: 2px 8px;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 .fbot {
@@ -956,8 +1019,8 @@ footer h4 {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin-top: 44px;
-  padding-top: 20px;
+  margin-top: 16px;
+  padding-top: 12px;
   border-top: 1px solid var(--line);
   font-size: 0.88rem;
 }
@@ -970,7 +1033,7 @@ footer h4 {
   text-decoration: underline;
 }
 footer .soc {
-  margin: 0 0 10px -8px;
+  margin: 0 0 4px -8px;
 }
 
 .pc {
@@ -1133,7 +1196,6 @@ footer .soc {
 @media (max-width: 860px) {
   .hero,
   .cols,
-  .split,
   .proj {
     grid-template-columns: 1fr;
   }
@@ -1170,8 +1232,11 @@ footer .soc {
     height: 180px;
   }
   .fgrid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 18px 24px;
+  }
+  .fgrid > :first-child {
+    grid-column: 1 / -1;
   }
   .fx {
     font-size: 0.7rem;
@@ -1182,6 +1247,15 @@ footer .soc {
   }
   .pbig {
     aspect-ratio: 16/9;
+  }
+  .fullstack {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+  .fullstack-skills {
+    padding: 22px 0 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
 }
 @media (max-width: 560px) {
