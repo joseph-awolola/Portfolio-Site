@@ -361,7 +361,20 @@ h3 {
     rgba(110, 160, 255, 0.32),
     rgba(110, 160, 255, 0) 68%
   );
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    background 0.3s ease,
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.glow.is-focused {
+  width: 112px;
+  height: 112px;
+  background: radial-gradient(
+    circle,
+    rgba(75, 135, 255, 0.42),
+    rgba(110, 160, 255, 0) 56%
+  );
 }
 .glow::after {
   content: "";
@@ -373,6 +386,10 @@ h3 {
   mix-blend-mode: multiply;
   -webkit-mask-image: radial-gradient(circle, #000 15%, transparent 68%);
   mask-image: radial-gradient(circle, #000 15%, transparent 68%);
+}
+.glow.is-focused::after {
+  -webkit-mask-image: radial-gradient(circle, #000 24%, transparent 56%);
+  mask-image: radial-gradient(circle, #000 24%, transparent 56%);
 }
 h1 {
   position: relative;

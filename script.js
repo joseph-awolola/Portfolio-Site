@@ -142,6 +142,7 @@
   // hero letters
   var h = document.getElementById("h1"),
     hl = document.getElementById("hl"),
+    hero = document.querySelector(".hero"),
     glow = document.getElementById("glow"),
     gridbg = document.querySelector(".gridbg"),
     txt = h.textContent;
@@ -167,6 +168,15 @@
   function half() {
     return glow.offsetWidth / 2;
   }
+  function positionGlow(x, y) {
+    var box = gridbg.getBoundingClientRect();
+    glow.style.transform =
+      "translate(" +
+      (x - box.left - half()) +
+      "px," +
+      (y - box.top - half()) +
+      "px)";
+  }
   function rest() {
     var hbox = h.getBoundingClientRect(),
       box = gridbg.getBoundingClientRect();
@@ -176,6 +186,16 @@
       "px," +
       (hbox.top + hbox.height / 2 - box.top - half()) +
       "px)";
+  }
+  var focusSelector = ".btn, .glance, .fx";
+  function hasFocusTarget(target) {
+    return target instanceof Element && target.closest(focusSelector);
+  }
+  function setGlowFocus(focused, x, y) {
+    glow.classList.toggle("is-focused", focused);
+    if (typeof x === "number" && typeof y === "number") {
+      positionGlow(x, y);
+    }
   }
   rest();
   addEventListener("resize", rest);
@@ -200,15 +220,22 @@
         rest();
         return;
       }
-      glow.style.transform =
-        "translate(" +
-        (e.clientX - box.left - half()) +
-        "px," +
-        (e.clientY - box.top - half()) +
-        "px)";
+      positionGlow(e.clientX, e.clientY);
     });
     addEventListener("pointerout", function (e) {
-      if (!e.relatedTarget) rest();
+      if (!e.relatedTarget) {
+        setGlowFocus(false);
+        rest();
+      }
+    });
+    hero.addEventListener("pointerover", function (e) {
+      if (e.pointerType === "touch" || !hasFocusTarget(e.target)) return;
+      setGlowFocus(true, e.clientX, e.clientY);
+    });
+    hero.addEventListener("pointerout", function (e) {
+      if (e.pointerType === "touch" || !hasFocusTarget(e.target)) return;
+      var nextTarget = hasFocusTarget(e.relatedTarget);
+      setGlowFocus(!!nextTarget, e.clientX, e.clientY);
     });
     hl.addEventListener("pointermove", function (e) {
       if (e.pointerType === "touch") {
