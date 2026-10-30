@@ -17,6 +17,33 @@
   });
   var stackSection = document.getElementById("stack");
   if (stackSection) io.observe(stackSection);
+  var certCards = document.querySelectorAll("#certs .cert");
+  if (certCards.length > 1) {
+    var certDimFrame = 0;
+    function updateCertDimming() {
+      if (certDimFrame) return;
+      certDimFrame = requestAnimationFrame(function () {
+        certDimFrame = 0;
+        certCards.forEach(function (card, index) {
+          var rect = card.getBoundingClientRect(),
+            dim = 0;
+          for (var nextIndex = index + 1; nextIndex < certCards.length; nextIndex++) {
+            var nextRect = certCards[nextIndex].getBoundingClientRect(),
+              overlap =
+                Math.min(rect.bottom, nextRect.bottom) -
+                Math.max(rect.top, nextRect.top);
+            if (overlap > 0) {
+              dim = Math.max(dim, Math.min(1, overlap / rect.height));
+            }
+          }
+          card.style.setProperty("--cert-dim", (dim * 0.45).toFixed(3));
+        });
+      });
+    }
+    addEventListener("scroll", updateCertDimming, { passive: true });
+    addEventListener("resize", updateCertDimming);
+    updateCertDimming();
+  }
 
   // mobile side panel
   var bg = document.getElementById("burger"),

@@ -645,6 +645,7 @@ h2 {
   background: rgba(58, 109, 224, 0.38);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(58, 109, 224, 0.28));
   cursor: pointer;
   transition:
     filter 0.25s ease,
@@ -670,11 +671,12 @@ h2 {
   }
 }
 .stack-hive:hover .stack-cell:not(:hover) {
-  filter: blur(2px);
+  filter: blur(2px) drop-shadow(0 0 6px rgba(58, 109, 224, 0.18));
   opacity: 0.38;
 }
 .stack-hive .stack-cell:hover {
   z-index: 1;
+  filter: drop-shadow(0 0 13px rgba(58, 109, 224, 0.68));
   transform: translate(-50%, -50%) scale(1.045);
 }
 .stack-cell:nth-child(1) {
@@ -741,16 +743,18 @@ h2 {
 .stack-mark {
   display: grid;
   place-items: center;
-  min-width: 48px;
-  height: 48px;
-  padding: 0 8px;
+  width: 52px;
+  height: 52px;
+  padding: 6px;
   border: 1px solid rgba(58, 109, 224, 0.22);
   border-radius: 15px;
   background: rgba(220, 232, 255, 0.75);
   color: var(--bd);
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1;
+}
+.stack-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .stack-name {
   color: var(--bd);
@@ -842,10 +846,26 @@ h2 {
 .pb a:hover {
   text-decoration: underline;
 }
+#certs {
+  position: relative;
+  isolation: isolate;
+}
+#certs::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(58, 109, 224, 0.1), transparent 38%),
+    linear-gradient(145deg, #f8faff, #edf3ff);
+}
 .certs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
 }
 .certs-heading {
   margin-bottom: 32px;
@@ -862,8 +882,14 @@ h2 {
   letter-spacing: 0.14em;
 }
 .cert {
+  position: sticky;
+  top: 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  min-height: clamp(440px, calc(100svh - 112px), 680px);
   min-width: 0;
   overflow: hidden;
+  isolation: isolate;
   border: 1px solid var(--line);
   border-radius: 18px;
   background: var(--bg);
@@ -873,21 +899,31 @@ h2 {
     border-color 0.25s ease,
     box-shadow 0.25s ease;
 }
+.cert::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: #0f1b33;
+  opacity: var(--cert-dim, 0);
+  pointer-events: none;
+}
 .cert:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: rgba(58, 109, 224, 0.42);
   box-shadow: 0 16px 34px rgba(38, 80, 184, 0.12);
 }
 .cert-image-slot {
   position: relative;
-  min-height: 190px;
+  order: 2;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
   overflow: hidden;
-  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
   background:
     radial-gradient(ellipse at 50% 115%, rgba(58, 109, 224, 0.16), transparent 58%),
     linear-gradient(145deg, #f8faff, #edf3ff);
@@ -954,7 +990,13 @@ h2 {
   font-weight: 700;
 }
 .cert-content {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   padding: 22px;
+  padding: clamp(24px, 5vw, 56px);
 }
 .cert-issuer {
   display: block;
@@ -964,9 +1006,9 @@ h2 {
   font-weight: 800;
 }
 .cert h3 {
-  min-height: 2.5em;
-  margin: 0 0 18px;
-  font-size: 1.12rem;
+  min-height: 0;
+  margin: 0 0 22px;
+  font-size: clamp(1.35rem, 3vw, 2rem);
 }
 .cert-category {
   display: inline-flex;
@@ -1416,8 +1458,20 @@ footer .soc {
   .proj {
     grid-template-columns: 1fr;
   }
-  .certs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .cert {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cert-image-slot {
+    order: 1;
+    align-self: stretch;
+    min-height: 220px;
+    aspect-ratio: 16 / 9;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cert-content {
+    order: 2;
+    padding: clamp(22px, 4vw, 34px);
   }
   .hero {
     padding-top: 44px;
