@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joseph-awolola.vercel.app/sitemap.xml

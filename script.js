@@ -333,48 +333,26 @@
   // project pages
   var P = {
     portfolio: {
-      t: "Portfolio Showcase",
-      lead: "A rich portfolio display that presents projects clearly on any screen.",
-      w: "This site showcases projects in one place. Visitors can browse interactive project cards, see what each project is, and jump to the live version. The layout is responsive, so it reads well on phones, tablets and desktops, and a clean visual style keeps the focus on the work.",
+      t: "Photography Portfolio Website",
+      lead: "A responsive photography portfolio for David's Shots, with a clear path to book a session.",
+      w: "The website presents portrait, wedding and event photography in a responsive visual portfolio. Visitors can browse the work and find a direct route to book a photography session.",
       f: [
-        "Responsive layout for every screen size",
-        "Interactive project cards",
-        "Clean, consistent visual style",
+        "Portrait, wedding and event photography collections",
+        "Responsive portfolio layout",
+        "Session booking call to action",
       ],
-      s: ["HTML", "CSS", "JavaScript"],
-    },
-    ecommerce: {
-      t: "E-commerce",
-      lead: "An online store built to browse, pick and buy.",
-      w: "A storefront where visitors can look through products, add what they like to a cart and check out. It is designed to be easy for customers to use and easy for the owner to run.",
-      f: [
-        "Product browsing",
-        "Cart and checkout flow",
-        "Responsive design for phones and desktops",
-      ],
-      s: ["[Add your stack]"],
+      s: [".NET", "C#", "Blazor"],
     },
     dashboard: {
-      t: "Dashboard",
-      lead: "A single view of the numbers that matter.",
-      w: "A dashboard that brings key figures and recent activity together, so users can see how things are going at a glance and spot what needs attention.",
+      t: "Photography Studio Dashboard",
+      lead: "A studio management overview for appointments, services and booking availability.",
+      w: "The dashboard gives a photography studio a single view of its active services, upcoming appointments and weekly availability, with access to manage each area.",
       f: [
-        "Key figures at a glance",
-        "Recent activity overview",
-        "Clear, readable layout",
+        "Upcoming appointment overview",
+        "Studio services and pricing",
+        "Weekly booking availability",
       ],
-      s: ["[Add your stack]"],
-    },
-    landing: {
-      t: "Landing Page",
-      lead: "A focused page that turns visitors into customers.",
-      w: "A single-page site that introduces a product or service, explains why it matters and points visitors toward one clear action.",
-      f: [
-        "Clear message at the top of the page",
-        "One focused call to action",
-        "Fast, responsive layout",
-      ],
-      s: ["[Add your stack]"],
+      s: [],
     },
   };
   var pv = document.getElementById("pview"),
@@ -421,18 +399,17 @@
       ul.appendChild(mk("li", null, x));
     });
     left.appendChild(ul);
-    var side = mk("aside", "pside");
-    side.appendChild(mk("h3", null, "Built with"));
-    var tg = mk("div", "tags");
-    d.s.forEach(function (x) {
-      tg.appendChild(mk("span", null, x));
-    });
-    side.appendChild(tg);
-    var vl = mk("a", "btn main", "View live");
-    vl.href = "#";
-    side.appendChild(vl);
     g.appendChild(left);
-    g.appendChild(side);
+    if (d.s.length) {
+      var side = mk("aside", "pside");
+      side.appendChild(mk("h3", null, "Built with"));
+      var tg = mk("div", "tags");
+      d.s.forEach(function (x) {
+        tg.appendChild(mk("span", null, x));
+      });
+      side.appendChild(tg);
+      g.appendChild(side);
+    }
     var more = mk("div", "more in");
     more.style.animationDelay = ".5s";
     more.appendChild(mk("h3", null, "More projects"));

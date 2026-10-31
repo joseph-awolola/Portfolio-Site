@@ -632,6 +632,26 @@ h2 {
   width: min(100%, 650px);
   aspect-ratio: 0.96;
   margin: 0 auto;
+}
+.stack-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.stack-connectors path {
+  fill: none;
+  stroke: rgba(58, 109, 224, 0.4);
+  stroke-width: 0.35;
+  stroke-linecap: round;
+}
+.stack-cells {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -639,7 +659,7 @@ h2 {
   position: absolute;
   top: var(--hive-y);
   left: var(--hive-x);
-  width: 38%;
+  width: 30%;
   aspect-ratio: 1.155;
   padding: 3px;
   background: rgba(58, 109, 224, 0.38);
@@ -680,47 +700,48 @@ h2 {
   transform: translate(-50%, -50%) scale(1.045);
 }
 .stack-cell:nth-child(1) {
-  --hive-x: 20%;
-  --hive-y: 33.333%;
+  --hive-x: 22%;
+  --hive-y: 35%;
   --hive-from-x: 48%;
   --hive-from-y: 28%;
   animation-delay: 0.16s;
 }
 .stack-cell:nth-child(2) {
   --hive-x: 50%;
-  --hive-y: 16.667%;
+  --hive-y: 20.5%;
   --hive-from-y: 52%;
   animation-delay: 0.08s;
 }
 .stack-cell:nth-child(3) {
   --hive-x: 50%;
   --hive-y: 50%;
+  width: 38%;
   animation-delay: 0s;
 }
 .stack-cell:nth-child(4) {
-  --hive-x: 80%;
-  --hive-y: 33.333%;
+  --hive-x: 78%;
+  --hive-y: 35%;
   --hive-from-x: -48%;
   --hive-from-y: 28%;
   animation-delay: 0.24s;
 }
 .stack-cell:nth-child(5) {
-  --hive-x: 20%;
-  --hive-y: 66.667%;
+  --hive-x: 22%;
+  --hive-y: 65%;
   --hive-from-x: 48%;
   --hive-from-y: -28%;
   animation-delay: 0.32s;
 }
 .stack-cell:nth-child(6) {
-  --hive-x: 80%;
-  --hive-y: 66.667%;
+  --hive-x: 78%;
+  --hive-y: 65%;
   --hive-from-x: -48%;
   --hive-from-y: -28%;
   animation-delay: 0.4s;
 }
 .stack-cell:nth-child(7) {
   --hive-x: 50%;
-  --hive-y: 83.333%;
+  --hive-y: 79.5%;
   --hive-from-y: -52%;
   animation-delay: 0.48s;
 }
@@ -732,13 +753,15 @@ h2 {
   gap: 5px;
   width: 100%;
   height: 100%;
-  background: var(--soft);
+  background-color: var(--soft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20.784 18'%3E%3Cpath d='M5.196 0 10.392 3 10.392 9 5.196 12 0 9 0 3z M10.392 9 15.588 12 15.588 18 10.392 21 5.196 18 5.196 12z M20.784 9 25.98 12 25.98 18 20.784 21 15.588 18 15.588 12z' fill='%23dce8ff' fill-opacity='.05'/%3E%3Cpath d='M15.588 0 20.784 3 20.784 9 15.588 12 10.392 9 10.392 3z M0 9 5.196 12 5.196 18 0 21 -5.196 18 -5.196 12z' fill='%23ffffff' fill-opacity='.05'/%3E%3Cpath d='M5.196 0 10.392 3 10.392 9 5.196 12 0 9 0 3z M15.588 0 20.784 3 20.784 9 15.588 12 10.392 9 10.392 3z M10.392 9 15.588 12 15.588 18 10.392 21 5.196 18 5.196 12z M20.784 9 25.98 12 25.98 18 20.784 21 15.588 18 15.588 12z M0 9 5.196 12 5.196 18 0 21 -5.196 18 -5.196 12z' fill='none' stroke='%232650b8' stroke-opacity='.08' stroke-width='.35'/%3E%3C/svg%3E");
+  background-size: 48px 41.57px;
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   color: var(--ink);
-  transition: background 0.2s;
+  transition: background-color 0.2s;
 }
 .stack-cell:hover .stack-content {
-  background: var(--bl);
+  background-color: var(--bl);
 }
 .stack-mark {
   display: grid;
@@ -763,7 +786,7 @@ h2 {
   text-align: center;
 }
 .stack-center .stack-content {
-  background: var(--bl);
+  background-color: var(--bl);
 }
 .stack-center .stack-mark {
   background: #fff;
@@ -866,6 +889,7 @@ h2 {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 28px;
+  justify-items: center;
 }
 .certs-heading {
   margin-bottom: 32px;
@@ -884,6 +908,9 @@ h2 {
 .cert {
   position: sticky;
   top: 80px;
+  width: min(100%, 900px);
+  translate: var(--cert-stack-offset, 0px) 0;
+  z-index: var(--cert-stack-order, 1);
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   min-height: clamp(440px, calc(100svh - 112px), 680px);
@@ -898,6 +925,17 @@ h2 {
     transform 0.25s ease,
     border-color 0.25s ease,
     box-shadow 0.25s ease;
+}
+.cert:nth-child(1) {
+  --cert-stack-offset: -12px;
+}
+.cert:nth-child(2) {
+  --cert-stack-offset: 0px;
+  --cert-stack-order: 2;
+}
+.cert:nth-child(3) {
+  --cert-stack-offset: 12px;
+  --cert-stack-order: 3;
 }
 .cert::after {
   content: "";
@@ -1241,7 +1279,7 @@ footer p {
   margin: 0 0 10px;
   max-width: 34em;
 }
-footer h4 {
+footer h2 {
   margin: 0 0 8px;
   font:
     700 0.9rem "Google Sans",
